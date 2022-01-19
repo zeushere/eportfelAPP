@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "54120127701",
+    "project_id": "eportfelapp",
+    "storage_bucket": "eportfelapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54120127701:android:48bd846a31317c0de3d65c",
+        "android_client_info": {
+          "package_name": "com.example.eportfelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54120127701-h971tv9i0qilnd924ee5llvgru9mm06k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eportfelapp",
+            "certificate_hash": "4a5458912140377e6a4a2937555eae5c7eea66a3"
+          }
+        },
+        {
+          "client_id": "54120127701-epf3lhhs2bb3ulpt1s2r0qgjq82bk2pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKcqU0uglJThpXYdYHuzB17uwkMis2Ptg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54120127701-epf3lhhs2bb3ulpt1s2r0qgjq82bk2pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
