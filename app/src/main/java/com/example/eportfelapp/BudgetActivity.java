@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -182,7 +183,7 @@ public class BudgetActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull final Data model) {
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Data model) {
 
                 holder.setItemAmount("Allocated amount: $"+ model.getAmount());
                 holder.setDate("On: "+model.getDate());
@@ -253,13 +254,14 @@ public class BudgetActivity extends AppCompatActivity {
     public class MyViewHolder extends RecyclerView.ViewHolder{
         View mView;
         public ImageView imageView;
-        public TextView notes;
+        public TextView notes, date;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
             imageView = itemView.findViewById(R.id.imageView);
             notes = itemView.findViewById(R.id.note);
+            date = itemView.findViewById(R.id.date);
 
         }
 
@@ -276,6 +278,7 @@ public class BudgetActivity extends AppCompatActivity {
 
         public void setDate (String itemDate){
             TextView date = mView.findViewById(R.id.date);
+            date.setText(itemDate);
         }
     }
 
