@@ -2,21 +2,21 @@ package com.example.eportfelapp;
 
 public class Data {
 
-    String item, date, id, notes;
-    int amount, month;
+    String item,date,id;
+    int amount,week,month;
+    String notes;
 
-    public Data(){
-
+    public Data() {
     }
 
-
-    public Data(String item, String date, String id, String notes, int amount, int month) {
+    public Data(String item, String date, String id, int amount, int week, int month, String notes) {
         this.item = item;
         this.date = date;
         this.id = id;
-        this.notes = notes;
         this.amount = amount;
+        this.week = week;
         this.month = month;
+        this.notes = notes;
     }
 
     public String getItem() {
@@ -43,12 +43,9 @@ public class Data {
         this.id = id;
     }
 
+
     public String getNotes() {
         return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public int getAmount() {
@@ -59,11 +56,24 @@ public class Data {
         this.amount = amount;
     }
 
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
     public int getMonth() {
         return month;
     }
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }
