@@ -9,6 +9,7 @@ public class Data {
 
     }
 
+
     public Data(String item, String date, String id, String notes, int amount, int month) {
         this.item = item;
         this.date = date;
