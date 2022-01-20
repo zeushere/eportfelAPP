@@ -54,20 +54,12 @@ public class TodaySpendingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_today_spending);
 
         toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Today Spending");
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Today Spending");
         totalAmountSpentOn = findViewById(R.id.totalAmountSpentOn);
         progressBar = findViewById(R.id.progressBar);
-
-
+        recyclerView = findViewById(R.id.recyclerView);
         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addItemSpentOn();
-            }
-        });
         loader = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -75,7 +67,17 @@ public class TodaySpendingActivity extends AppCompatActivity {
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
 
 
-        recyclerView = findViewById(R.id.recyclerView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addItemSpentOn();
+            }
+        });
+
+
+
+
+
 
 
 

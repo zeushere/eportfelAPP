@@ -11,7 +11,8 @@
         android:theme="@style/Theme.EportfelAPP">
         <activity
             android:name=".TodaySpendingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
         <activity
             android:name=".BudgetActivity"
             android:exported="false"
