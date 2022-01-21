@@ -123,7 +123,7 @@
                 android:id="@+id/monthBtnTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Today Analytics"
+                android:text="Month Analytics"
                 android:textAlignment="center"
                 android:textColor="#000"
                 android:textStyle="bold" />

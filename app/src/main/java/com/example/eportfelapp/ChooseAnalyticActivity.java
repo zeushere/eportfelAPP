@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 public class ChooseAnalyticActivity extends AppCompatActivity {
-    private CardView todayCardView;
+    private CardView todayCardView, weekCardView, monthCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,11 +16,29 @@ public class ChooseAnalyticActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_analytic);
 
         todayCardView = findViewById(R.id.todayCardView);
+        weekCardView = findViewById(R.id.weekCardView);
+        monthCardView = findViewById(R.id.monthCardView);
 
         todayCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChooseAnalyticActivity.this, DailyAnalyticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        weekCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChooseAnalyticActivity.this, WeeklyAnalyticsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        monthCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChooseAnalyticActivity.this, MonthlyAnalyticsActivity.class);
                 startActivity(intent);
             }
         });

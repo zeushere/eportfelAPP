@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EportfelAPP">
         <activity
+            android:name=".MonthlyAnalyticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WeeklyAnalyticsActivity"
+            android:exported="false" />
+        <activity
             android:name=".DailyAnalyticsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
