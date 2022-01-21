@@ -11,10 +11,12 @@
         android:theme="@style/Theme.EportfelAPP">
         <activity
             android:name=".MonthlyAnalyticsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
         <activity
             android:name=".WeeklyAnalyticsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".DailyAnalyticsActivity"
             android:exported="false"

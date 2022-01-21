@@ -80,7 +80,7 @@ public class BudgetActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int totalAmount = 0;
 
-                for(DataSnapshot snap: snapshot.getChildren()){
+                for (DataSnapshot snap : snapshot.getChildren()) {
                     Data data = snap.getValue(Data.class);
                     totalAmount += data.getAmount();
                     String sTotal = String.valueOf("Month budget: $" + totalAmount);
@@ -146,7 +146,11 @@ public class BudgetActivity extends AppCompatActivity {
                     Weeks weeks = Weeks.weeksBetween(epoch, now);
                     Months months = Months.monthsBetween(epoch, now);
 
-                    Data data = new Data(budgetItem, date, id, Integer.parseInt(budgetAmount), months.getMonths(), weeks.getWeeks(),null);
+                    String itemNday = budgetItem + date;
+                    String itemNweek = budgetItem + weeks.getWeeks();
+                    String itemNmonth = budgetItem + months.getMonths();
+
+                    Data data = new Data(budgetItem, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(budgetAmount), months.getMonths(), weeks.getWeeks(), null );
                     budgetRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -187,13 +191,13 @@ public class BudgetActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Data model) {
 
-                holder.setItemAmount("Allocated amount: $"+ model.getAmount());
-                holder.setDate("On: "+model.getDate());
-                holder.setItemName("BudgetItem: "+model.getItem());
+                holder.setItemAmount("Allocated amount: $" + model.getAmount());
+                holder.setDate("On: " + model.getDate());
+                holder.setItemName("BudgetItem: " + model.getItem());
 
                 holder.notes.setVisibility(View.GONE);
 
-                switch (model.getItem()){
+                switch (model.getItem()) {
                     case "Transport":
                         holder.imageView.setImageResource(R.drawable.ic_transport);
                         break;
@@ -253,7 +257,7 @@ public class BudgetActivity extends AppCompatActivity {
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         View mView;
         public ImageView imageView;
         public TextView notes, date;
@@ -267,24 +271,24 @@ public class BudgetActivity extends AppCompatActivity {
 
         }
 
-        public void setItemName (String itemName){
+        public void setItemName(String itemName) {
             TextView item = mView.findViewById(R.id.item);
             item.setText(itemName);
 
         }
 
-        public void setItemAmount(String itemAmount){
-            TextView amount = mView.findViewById(R.id. amount);
+        public void setItemAmount(String itemAmount) {
+            TextView amount = mView.findViewById(R.id.amount);
             amount.setText(itemAmount);
         }
 
-        public void setDate (String itemDate){
+        public void setDate(String itemDate) {
             TextView date = mView.findViewById(R.id.date);
             date.setText(itemDate);
         }
     }
 
-    private void updateData(){
+    private void updateData() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View mView = inflater.inflate(R.layout.update_layout, null);
@@ -319,8 +323,11 @@ public class BudgetActivity extends AppCompatActivity {
                 DateTime now = new DateTime();
                 Weeks weeks = Weeks.weeksBetween(epoch, now);
                 Months months = Months.monthsBetween(epoch, now);
+                String itemNday = item + date;
+                String itemNweek = item + weeks.getWeeks();
+                String itemNmonth = item + months.getMonths();
 
-                Data data = new Data(item, date, post_key, amount, weeks.getWeeks(), months.getMonths(), null);
+                Data data = new Data(item, date, post_key,itemNday,itemNweek,itemNmonth, amount, weeks.getWeeks(), months.getMonths(), null);
                 budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

@@ -2,17 +2,20 @@ package com.example.eportfelapp;
 
 public class Data {
 
-    String item,date,id;
+    String item,date,id, itemNday, itemNweek, itemNmonth;
     int amount,week,month;
     String notes;
 
     public Data() {
     }
 
-    public Data(String item, String date, String id, int amount, int week, int month, String notes) {
+    public Data(String item, String date, String id, String itemNday, String itemNweek, String itemNmonth, int amount, int week, int month, String notes) {
         this.item = item;
         this.date = date;
         this.id = id;
+        this.itemNday = itemNday;
+        this.itemNweek = itemNweek;
+        this.itemNmonth = itemNmonth;
         this.amount = amount;
         this.week = week;
         this.month = month;
@@ -43,9 +46,28 @@ public class Data {
         this.id = id;
     }
 
+    public String getItemNday() {
+        return itemNday;
+    }
 
-    public String getNotes() {
-        return notes;
+    public void setItemNday(String itemNday) {
+        this.itemNday = itemNday;
+    }
+
+    public String getItemNweek() {
+        return itemNweek;
+    }
+
+    public void setItemNweek(String itemNweek) {
+        this.itemNweek = itemNweek;
+    }
+
+    public String getItemNmonth() {
+        return itemNmonth;
+    }
+
+    public void setItemNmonth(String itemNmonth) {
+        this.itemNmonth = itemNmonth;
     }
 
     public int getAmount() {
@@ -72,6 +94,9 @@ public class Data {
         this.month = month;
     }
 
+    public String getNotes() {
+        return notes;
+    }
 
     public void setNotes(String notes) {
         this.notes = notes;
