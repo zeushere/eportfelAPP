@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EportfelAPP">
         <activity
+            android:name=".DailyAnalyticsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
             android:name=".ChooseAnalyticActivity"
             android:exported="false"
-            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".WeekSpendingActivity"
             android:exported="false"
