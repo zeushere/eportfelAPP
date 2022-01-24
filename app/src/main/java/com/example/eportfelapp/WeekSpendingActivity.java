@@ -80,6 +80,7 @@ public class WeekSpendingActivity extends AppCompatActivity {
                 readWeekSpendingItems();
             } else if (type.equals("month")){
                 readMonthSpendingItems();
+                getSupportActionBar().setTitle("Month Spending");
             }
         }
         
