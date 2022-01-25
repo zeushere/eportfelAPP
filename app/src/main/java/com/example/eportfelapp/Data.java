@@ -4,6 +4,7 @@ public class Data {
 
     String item,date,id, itemNday, itemNweek, itemNmonth;
     int amount,week,month;
+    String barcode;
     String notes;
 
     public Data() {
@@ -19,6 +20,20 @@ public class Data {
         this.amount = amount;
         this.week = week;
         this.month = month;
+        this.notes = notes;
+    }
+
+    public Data(String item, String date, String id, String itemNday, String itemNweek, String itemNmonth, int amount, int week, int month, String barcode, String notes) {
+        this.item = item;
+        this.date = date;
+        this.id = id;
+        this.itemNday = itemNday;
+        this.itemNweek = itemNweek;
+        this.itemNmonth = itemNmonth;
+        this.amount = amount;
+        this.week = week;
+        this.month = month;
+        this.barcode = barcode;
         this.notes = notes;
     }
 
@@ -92,6 +107,14 @@ public class Data {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getNotes() {

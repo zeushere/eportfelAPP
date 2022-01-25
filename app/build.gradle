@@ -44,4 +44,5 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
 }

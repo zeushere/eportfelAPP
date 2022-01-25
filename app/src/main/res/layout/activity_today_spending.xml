@@ -47,6 +47,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scanBtn"
+                android:text="Scan now"
+                android:textSize="20sp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="80dp"
+                android:layout_marginBottom="20dp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
