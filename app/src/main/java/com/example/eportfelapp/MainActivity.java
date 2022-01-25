@@ -33,7 +33,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CardView budgetCardView, todayCardView;
+    private CardView budgetCardView, todayCardView, historyCardView;
     private TextView budgetTv, weekSpendingTv, monthSpendingTv, todaySpendingTv, remainingBudgetTv;
 
     private ImageView weekBtnImageView, todayBtnImageView, budgetBtnImageView, monthBtnImageView, analyticsImageView;
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         budgetBtnImageView = findViewById(R.id.budgetBtnImageView);
         todayBtnImageView = findViewById(R.id.todayBtnImageView);
         analyticsImageView = findViewById(R.id.analyticsImageView);
+        historyCardView = findViewById(R.id.historyCardView);
         budgetBtnImageView.setOnClickListener(new View.OnClickListener() {
 
 
@@ -117,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ChooseAnalyticActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        historyCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(intent);
             }
         });
