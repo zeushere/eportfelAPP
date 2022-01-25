@@ -47,7 +47,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class TodaySpendingActivity extends AppCompatActivity implements View.OnClickListener{
+public class TodaySpendingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
@@ -113,8 +113,11 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
 
     }
+    private void showToast() {
+        Toast.makeText(this, "No product in the database", Toast.LENGTH_SHORT).show();
+    }
 
-    private void readProducts(String resultScan){
+    private void readProducts(String resultScan) {
         long result = Long.parseLong(resultScan);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
         Query query = reference.orderByChild("barcode").equalTo(result);
@@ -122,29 +125,78 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                Products product = new Products();
                 myProductsList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
                     Products data = dataSnapshot.getValue(Products.class);
                     myProductsList.add(data);
-                    System.out.println("eluwina");
-                    System.out.println(data.getBarcode());
+                    product = data;
                 }
-                todayItemsAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
 
-                int totalAmount = 0;
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                    Object total = map.get("amount");
-                    int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount += pTotal;
+                if (!myProductsList.isEmpty()) {
+                    String Amount = String.valueOf(product.getAmount());
+                    String Item = product.getItem();
+                    String notes = product.getNotes();
 
-                    totalAmountSpentOn.setText("Total Day's Spending: $" + totalAmount);
+                    loader.setMessage("adding a budget item");
+                    loader.setCanceledOnTouchOutside(false);
+                    loader.show();
+
+                    String id = expensesRef.push().getKey();
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    Calendar cal = Calendar.getInstance();
+                    String date = dateFormat.format(cal.getTime());
+
+                    MutableDateTime epoch = new MutableDateTime();
+                    epoch.setDate(0);
+                    DateTime now = new DateTime();
+                    Weeks weeks = Weeks.weeksBetween(epoch, now);
+                    Months months = Months.monthsBetween(epoch, now);
+
+                    String itemNday = Item + date;
+                    String itemNweek = Item + weeks.getWeeks();
+                    String itemNmonth = Item + months.getMonths();
+
+
+                    Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(Amount), weeks.getWeeks(), months.getMonths(), notes);
+                    expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            loader.dismiss();
+                        }
+                    });
+
+                    todayItemsAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
+
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
+
+                        totalAmountSpentOn.setText("Total Day's Spending: $" + totalAmount);
+
+                    }
+
                 }
+
+                else{
+                    showToast();
+                }
+
+
+
+
             }
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -189,9 +241,6 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    private void addProductSpentOn(){
-
-    }
 
     private void addItemSpentOn() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
@@ -296,10 +345,10 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null){
-            if(result.getContents() != null){
+        if (result != null) {
+            if (result.getContents() != null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(result.getContents());
                 builder.setTitle("Scanning Result");
@@ -312,77 +361,18 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         resultScan = result.getContents();
-
-
-                                   readProducts(resultScan);
-
-//                                String Amount = amount.getText().toString();
-//                                String Item = itemSpinner.getSelectedItem().toString();
-//                                String notes = note.getText().toString();
-//
-//                                if (TextUtils.isEmpty(Amount)) {
-//                                    amount.setError("Amount is required!");
-//                                    return;
-//                                }
-//
-//                                if (Item.equals("Select item")) {
-//                                    Toast.makeText(TodaySpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
-//                                }
-//
-//                                if (TextUtils.isEmpty(notes)) {
-//                                    note.setError("Note is required");
-//                                    return;
-//                                } else {
-//                                    loader.setMessage("adding a budget item");
-//                                    loader.setCanceledOnTouchOutside(false);
-//                                    loader.show();
-//
-//                                    String id = expensesRef.push().getKey();
-//                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//                                    Calendar cal = Calendar.getInstance();
-//                                    String date = dateFormat.format(cal.getTime());
-//
-//                                    MutableDateTime epoch = new MutableDateTime();
-//                                    epoch.setDate(0);
-//                                    DateTime now = new DateTime();
-//                                    Weeks weeks = Weeks.weeksBetween(epoch, now);
-//                                    Months months = Months.monthsBetween(epoch, now);
-//
-//                                    String itemNday = Item + date;
-//                                    String itemNweek = Item + weeks.getWeeks();
-//                                    String itemNmonth = Item + months.getMonths();
-//
-//
-//                                    Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(Amount), weeks.getWeeks(), months.getMonths(), notes);
-//                                    expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task) {
-//                                            if (task.isSuccessful()) {
-//                                                Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
-//                                            } else {
-//                                                Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-//                                            }
-//
-//                                            loader.dismiss();
-//                                        }
-//                                    });
-//                                }
-//                                dialog.dismiss();
-//
-//
-//
+                        readProducts(resultScan);
 
                     }
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-            }
-            else {
+            } else {
                 Toast.makeText(this, "No Results", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            super.onActivityResult(requestCode, resultCode,data);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }
