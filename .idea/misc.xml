@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/drawable/buttons.xml" value="0.16574074074074074" />
+        <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/drawable/ic_person.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/activity_account.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/activity_budget.xml" value="0.176" />
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/activity_choose_analytic.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/activity_daily_analytics.xml" value="0.1" />
@@ -19,6 +21,7 @@
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/input_layout.xml" value="0.1" />
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/retrieve_layout.xml" value="0.1" />
         <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/layout/update_layout.xml" value="0.2" />
+        <entry key="..\:/Users/zeushere/AndroidStudioProjects/eportfelAPP/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
