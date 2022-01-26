@@ -67,9 +67,10 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     private List<Products> myProductsList;
     private String resultScan;
 
-    static int isPassed = 0;
+    int isPassed = 0;
     int lastProductId = 0;
     int needToUpdateProductInfo = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,7 +302,9 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     String id = expensesRef.push().getKey();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
                     Query query = reference.orderByChild("id");
-                    Query queryBarcode = reference.orderByChild("barcode").equalTo(Long.parseLong(barcode));
+                    Query queryBarcode = null;
+                    if(!TextUtils.isEmpty(barcode))
+                        queryBarcode = reference.orderByChild("barcode").equalTo(Long.parseLong(barcode));
                     query.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -322,31 +325,48 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         }
                     });
 
-                    queryBarcode.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Products product = new Products();
-                            myProductsList.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                                Products data = dataSnapshot.getValue(Products.class);
-                                myProductsList.add(data);
-                                product = data;
-                                if(product.getBarcode().equals(Long.parseLong(barcode))){
-                                    Toast.makeText(TodaySpendingActivity.this, "The product exists in the database", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                else{
-                                    needToUpdateProductInfo = 1;
+
+
+                    if(!TextUtils.isEmpty(barcode)){
+                        queryBarcode.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Products product = new Products();
+                                myProductsList.clear();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+
+                                        Products data = dataSnapshot.getValue(Products.class);
+                                        myProductsList.add(data);
+                                        product = data;
+                                        if(product.getBarcode().equals(Long.parseLong(barcode))){
+                                            needToUpdateProductInfo = 1;
+                                            product = new Products(Item, Integer.parseInt(Amount), product.getId(), notes, Long.parseLong(barcode));
+                                            productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+
+                                                        Toast.makeText(TodaySpendingActivity.this, "Product updated successfuly", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                        break;
+
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+               }
 
 
                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -368,23 +388,25 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                isPassed = 1;
-                                Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            if(isPassed == 0){
+                                if (task.isSuccessful()) {
+                                    isPassed = 1;
+                                    Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                }
                             }
 
-                            if (isPassed == 1 && needToUpdateProductInfo == 1) {
+
+                            if (isPassed == 1 && !TextUtils.isEmpty(barcode) && needToUpdateProductInfo == 0) {
                                 isPassed = 0;
-                                needToUpdateProductInfo = 0;
                                 try {
                                     Products product = new Products(Item, Integer.parseInt(Amount), lastProductId, notes, Long.parseLong(barcode));
                                     productsRef.child(String.valueOf(lastProductId)).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(TodaySpendingActivity.this, "Product added successfuly", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                             }
