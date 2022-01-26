@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.ViewHolder> {
+public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.ViewHolder>{
 
     private Context mContext;
     private List<Data> myDataList;
@@ -47,21 +47,24 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.retrieve_layout, parent, false);
+
+        View view = LayoutInflater.from(mContext).inflate(R.layout.retrieve_layout, parent,false);
         return new TodayItemsAdapter.ViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final Data data = myDataList.get(position);
+        final  Data data = myDataList.get(position);
 
-        holder.item.setText("Item: " + data.getItem());
-        holder.amount.setText("Amount: " + data.getAmount());
-        holder.date.setText("On: " + data.getDate());
-        holder.notes.setText("Note: " + data.getNotes());
+        holder.item.setText("Item: "+ data.getItem());
+        holder.amount.setText("Amount: PLN "+ data.getAmount());
+        holder.date.setText("On "+data.getDate());
+        holder.notes.setText("Note: "+data.getNotes());
 
-        switch (data.getItem()) {
+
+        switch (data.getItem()){
             case "Transport":
                 holder.imageView.setImageResource(R.drawable.ic_transport);
                 break;
@@ -93,6 +96,7 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
                 holder.imageView.setImageResource(R.drawable.ic_other);
                 break;
         }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,28 +107,28 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
                 updateData();
             }
         });
+
     }
 
     private void updateData() {
 
-        AlertDialog.Builder myDialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder myDialog= new AlertDialog.Builder(mContext);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View mView = inflater.inflate(R.layout.update_layout, null);
 
         myDialog.setView(mView);
-        final AlertDialog dialog = myDialog.create();
+        final  AlertDialog dialog = myDialog.create();
 
         final TextView mItem = mView.findViewById(R.id.itemName);
         final EditText mAmount = mView.findViewById(R.id.amount);
-        final EditText mNotes = mView.findViewById(R.id.note);
-
+        final  EditText mNotes = mView.findViewById(R.id.note);
 
         mItem.setText(item);
 
         mAmount.setText(String.valueOf(amount));
         mAmount.setSelection(String.valueOf(amount).length());
 
-        mNotes.setText(note);
+        mNotes.setText( note);
         mNotes.setSelection(note.length());
 
         Button delBut = mView.findViewById(R.id.btnDelete);
@@ -133,6 +137,7 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 amount = Integer.parseInt(mAmount.getText().toString());
                 note = mNotes.getText().toString();
 
@@ -147,23 +152,22 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
                 Weeks weeks = Weeks.weeksBetween(epoch, now);
                 Months months = Months.monthsBetween(epoch, now);
 
-                String itemNday = item + date;
-                String itemNweek = item + weeks.getWeeks();
-                String itemNmonth = item + months.getMonths();
+                String itemNday = item+date;
+                String itemNweek = item+weeks.getWeeks();
+                String itemNmonth = item+months.getMonths();
 
-                Data data = new Data(item, date, post_key,itemNday,itemNweek,itemNmonth, amount, weeks.getWeeks(), months.getMonths(), note);
+                Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, amount, weeks.getWeeks(), months.getMonths(), note);
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 reference.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()){
                             Toast.makeText(mContext, "Updated successfully", Toast.LENGTH_SHORT).show();
-
-                        } else {
+                        }else {
                             Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-
                         }
+
                     }
                 });
 
@@ -172,32 +176,34 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
             }
         });
 
-        delBut.setOnClickListener(view -> {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        delBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                reference.child(post_key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(mContext, "Deleted  successfully", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
 
-            reference.child(post_key).removeValue().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(mContext, "Deleted successfully", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(mContext, task.getException().toString(), Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            dialog.dismiss();
+                    }
+                });
+                dialog.dismiss();
+            }
         });
 
         dialog.show();
     }
-
 
     @Override
     public int getItemCount() {
         return myDataList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView item, amount, date, notes;
         public ImageView imageView;

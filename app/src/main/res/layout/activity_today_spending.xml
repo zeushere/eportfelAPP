@@ -25,7 +25,7 @@
             android:id="@+id/totalAmountSpentOn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TotalAmount: PLN 0"
+            android:text="Total Amount: PLN 0"
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -45,7 +45,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@drawable/calendar"
+                app:layout_anchor="@+id/progressBar"
+                app:layout_anchorGravity="center" />
 
             <Button
                 android:layout_width="wrap_content"

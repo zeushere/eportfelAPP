@@ -89,6 +89,9 @@ public class BudgetActivity extends AppCompatActivity {
                     String sTotal = String.valueOf("Month budget: PLN " + totalAmount);
                     totalBudgetAmountTextView.setText(sTotal);
                 }
+                if (totalAmount == 0){
+                    totalBudgetAmountTextView.setText("Month budget: PLN " + 0);
+                }
             }
 
             @Override
@@ -118,7 +121,7 @@ public class BudgetActivity extends AppCompatActivity {
 
                         totalammount+=data.getAmount();
 
-                        String sttotal=String.valueOf("Month Budget: "+totalammount);
+                        String sttotal=String.valueOf("Month Budget: PLN "+totalammount);
 
                         totalBudgetAmountTextView.setText(sttotal);
 
@@ -243,7 +246,7 @@ public class BudgetActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull final Data model) {
 
-                holder.setItemAmount("Allocated amount: PLN" + model.getAmount());
+                holder.setItemAmount("Allocated amount: PLN " + model.getAmount());
                 holder.setDate("On: " + model.getDate());
                 holder.setItemName("BudgetItem: " + model.getItem());
 

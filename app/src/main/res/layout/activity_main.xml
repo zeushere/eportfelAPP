@@ -7,6 +7,7 @@
     android:background="@drawable/bgimage"
     tools:context=".MainActivity">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -157,9 +158,9 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:background="@drawable/money_bg"
         android:layout_height="match_parent"
-        android:layout_below="@+id/titles_table">
+        android:layout_below="@+id/titles_table"
+        android:background="@drawable/money_bg">
 
         <GridLayout
             android:id="@+id/grid_layout"
@@ -179,13 +180,13 @@
                 android:layout_height="170dp"
                 android:layout_row="0"
                 android:layout_rowWeight="1"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
-                app:cardBackgroundColor="#3AD22C"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
                 android:background="#72FF00"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#3AD22C"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 
@@ -219,14 +220,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
-                app:cardBackgroundColor="#FF3F3F"
                 android:layout_rowWeight="1"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
                 android:background="#fff"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FF3F3F"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 
@@ -241,7 +242,7 @@
                         android:id="@+id/todayBtnImageView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/today"/>
+                        android:src="@drawable/today" />
 
                     <TextView
                         android:id="@+id/todayBtnTextView"
@@ -258,15 +259,15 @@
                 android:id="@+id/weekCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_row="1"
-                app:cardBackgroundColor="#FF7A2A"
                 android:layout_rowWeight="1"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
                 android:background="#fff"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FF7A2A"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 
@@ -297,17 +298,17 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/monthCardView"
-                app:cardBackgroundColor="#5D54FF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_rowWeight="1"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
                 android:background="#fff"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#5D54FF"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 
@@ -321,8 +322,8 @@
                     <ImageView
                         android:id="@+id/monthBtnImageView"
                         android:layout_width="60dp"
-                        android:background="#5D54FF"
                         android:layout_height="60dp"
+                        android:background="#5D54FF"
                         android:src="@drawable/month" />
 
                     <TextView
@@ -341,14 +342,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_rowWeight="1"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
-                app:cardBackgroundColor="#EAFF01"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
                 android:background="#fff"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#EAFF01"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 
@@ -383,13 +384,13 @@
                 android:layout_height="wrap_content"
                 android:layout_row="2"
                 android:layout_rowWeight="1"
-                app:cardBackgroundColor="#BF4F57"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
                 android:background="#fff"
                 android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#BF4F57"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 

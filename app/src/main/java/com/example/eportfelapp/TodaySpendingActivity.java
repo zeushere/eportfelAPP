@@ -196,6 +196,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         }
 
                     } else {
+
                         showToast();
                     }
 
@@ -238,6 +239,9 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     int pTotal = Integer.parseInt(String.valueOf(total));
                     totalAmount += pTotal;
 
+                    totalAmountSpentOn.setText("Total Day's Spending: PLN " + totalAmount);
+                }
+                if (totalAmount == 0){
                     totalAmountSpentOn.setText("Total Day's Spending: PLN " + totalAmount);
                 }
             }
