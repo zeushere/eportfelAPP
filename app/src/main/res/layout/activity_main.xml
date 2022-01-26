@@ -8,166 +8,170 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000"
-        android:id="@+id/toolbar"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </androidx.appcompat.widget.Toolbar>
 
     <TableLayout
         android:id="@+id/titles_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_gravity="center_horizontal"
-        android:paddingHorizontal="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingHorizontal="10dp">
 
-        <TableRow >
+        <TableRow>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Budget"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:padding="5dp"
-                android:textSize="12dp"/>
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Today"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Week"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/borders"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="Month"
                 android:textColor="#fff"
-                android:gravity="center"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Savings"
-                android:textColor="#fff"
+                android:background="@drawable/borders"
                 android:gravity="center"
                 android:padding="5dp"
-                android:textStyle="bold"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:text="Savings"
+                android:textColor="#fff"
+                android:textSize="12dp"
+                android:textStyle="bold" />
         </TableRow>
 
-        <TableRow >
+        <TableRow>
+
             <TextView
                 android:id="@+id/budgetTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="$0"
-                android:textColor="#fff"
+                android:background="@drawable/borders"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:text="PLN 0"
+                android:textColor="#fff"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/todaySpendingTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="$0"
-                android:textColor="#fff"
+                android:background="@drawable/borders"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:text="PLN 0"
+                android:textColor="#fff"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/weekSpendingTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="$0"
-                android:textColor="#fff"
+                android:background="@drawable/borders"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:text="PLN 0"
+                android:textColor="#fff"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/monthSpendingTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="$0"
-                android:textColor="#fff"
+                android:background="@drawable/borders"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:text="PLN 0"
+                android:textColor="#fff"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/remainingBudgetTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="$0"
-                android:textColor="#fff"
+                android:background="@drawable/borders"
                 android:gravity="center"
                 android:padding="5dp"
-                android:background="@drawable/borders"
-                android:textSize="12dp"/>
+                android:text="PLN 0"
+                android:textColor="#fff"
+                android:textSize="12dp" />
         </TableRow>
     </TableLayout>
 
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
-        android:layout_below="@+id/titles_table"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@drawable/money_bg"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titles_table">
 
         <GridLayout
             android:id="@+id/grid_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/linerLayout2"
-            android:rowCount="3"
-            android:columnCount="2"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginBottom="20dp"
+            android:columnCount="2"
+            android:rowCount="3">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/budgetCardView"
@@ -175,11 +179,13 @@
                 android:layout_height="170dp"
                 android:layout_row="0"
                 android:layout_rowWeight="1"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
+                app:cardBackgroundColor="#3AD22C"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                android:background="#fff"
+                android:background="#72FF00"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp">
 
@@ -194,6 +200,7 @@
                         android:id="@+id/budgetBtnImageView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:background="#fff"
                         android:src="@drawable/budget" />
 
                     <TextView
@@ -212,35 +219,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
-                android:layout_column="1"
-                android:layout_gravity="fill"
+                app:cardBackgroundColor="#FF3F3F"
                 android:layout_rowWeight="1"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_column="1"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/todayBtnImageView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/today"/>
+
                     <TextView
                         android:id="@+id/todayBtnTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Today"
-                        android:textStyle="bold"
+                        android:textAlignment="center"
                         android:textColor="#000"
-                        android:textAlignment="center"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -248,73 +258,81 @@
                 android:id="@+id/weekCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_row="1"
-                android:layout_column="0"
-                android:layout_gravity="fill"
+                app:cardBackgroundColor="#FF7A2A"
                 android:layout_rowWeight="1"
+                android:layout_column="0"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/weekBtnImageView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/week"/>
+                        android:background="#fff"
+                        android:src="@drawable/week" />
+
                     <TextView
                         android:id="@+id/weekBtnTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="This week"
-                        android:textStyle="bold"
+                        android:textAlignment="center"
                         android:textColor="#000"
-                        android:textAlignment="center"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/monthCardView"
+                app:cardBackgroundColor="#5D54FF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
-                android:layout_column="1"
-                android:layout_gravity="fill"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_rowWeight="1"
+                android:layout_column="1"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/monthBtnImageView"
                         android:layout_width="60dp"
+                        android:background="#5D54FF"
                         android:layout_height="60dp"
-                        android:src="@drawable/month"/>
+                        android:src="@drawable/month" />
+
                     <TextView
                         android:id="@+id/monthBtnTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="This Month"
-                        android:textStyle="bold"
+                        android:textAlignment="center"
                         android:textColor="#000"
-                        android:textAlignment="center"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -323,35 +341,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
-                android:layout_column="0"
-                android:layout_gravity="fill"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_rowWeight="1"
+                android:layout_column="0"
                 android:layout_columnWeight="1"
+                app:cardBackgroundColor="#EAFF01"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
                 android:background="#fff"
-                >
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/analyticsImageView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_anaytic"/>
+                        android:background="#fff"
+                        android:src="@drawable/ic_anaytic" />
+
                     <TextView
                         android:id="@+id/analyticsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Analytics"
-                        android:textStyle="bold"
+                        android:textAlignment="center"
                         android:textColor="#000"
-                        android:textAlignment="center"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -360,33 +382,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
-                android:layout_column="1"
-                android:layout_gravity="fill"
                 android:layout_rowWeight="1"
+                app:cardBackgroundColor="#BF4F57"
+                android:layout_column="1"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
                 android:background="#fff"
-                >
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_history"/>
+                        android:background="#fff"
+                        android:src="@drawable/ic_history" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="History"
-                        android:textStyle="bold"
+                        android:textAlignment="center"
                         android:textColor="#000"
-                        android:textAlignment="center"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

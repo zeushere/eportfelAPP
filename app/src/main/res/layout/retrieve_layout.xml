@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="$0"
+                android:text="PLN 0"
                 android:textStyle="bold"
                 android:textColor="#000"
                 android:textSize="18sp"

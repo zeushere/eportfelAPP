@@ -536,8 +536,8 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         totalAmount+=pTotal;
 
                     }
-                    totalBudgetAmountTextView.setText("Total Months's spending: $ "+ totalAmount);
-                    monthSpentAmount.setText("Total Spent: $ "+totalAmount);
+                    totalBudgetAmountTextView.setText("Total Months's spending: PLN "+ totalAmount);
+                    monthSpentAmount.setText("Total Spent: PLN "+totalAmount);
                 }else {
                     anyChartView.setVisibility(View.GONE);
                 }

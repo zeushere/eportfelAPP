@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/applogo"/>
+        android:src="@drawable/logo"/>
 
 
     <EditText
@@ -39,6 +39,7 @@
 
     <Button
         android:id="@+id/loginBtn"
+        android:background="#00ccff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -49,6 +50,8 @@
         android:id="@+id/loginQn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="Do not have an account? Sign up!"
         android:gravity="center"/>
 

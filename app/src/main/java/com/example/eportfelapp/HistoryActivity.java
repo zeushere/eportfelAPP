@@ -118,7 +118,7 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
                     totalAmount+=pTotal;
                     if (totalAmount >0){
                         historyTotalAmountSpent.setVisibility(View.VISIBLE);
-                        historyTotalAmountSpent.setText("This day you spent $: "+ totalAmount);
+                        historyTotalAmountSpent.setText("This day you spent PLN: "+ totalAmount);
                     }
 
                 }

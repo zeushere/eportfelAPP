@@ -830,7 +830,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Total Spent: Ksh 0"
+                            android:text="Total Spent: PLN 0"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:textColor="#000"
