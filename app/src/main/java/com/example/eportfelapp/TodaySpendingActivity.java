@@ -118,90 +118,93 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     }
 
     private void readProducts(String resultScan) {
-        long result = Long.parseLong(resultScan);
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
-        Query query = reference.orderByChild("barcode").equalTo(result);
+        try {
+            long result = Long.parseLong(resultScan);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
+            Query query = reference.orderByChild("barcode").equalTo(result);
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Products product = new Products();
-                myProductsList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Products product = new Products();
+                    myProductsList.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    Products data = dataSnapshot.getValue(Products.class);
-                    myProductsList.add(data);
-                    product = data;
-                }
-
-                if (!myProductsList.isEmpty()) {
-                    String Amount = String.valueOf(product.getAmount());
-                    String Item = product.getItem();
-                    String notes = product.getNotes();
-
-                    loader.setMessage("adding a budget item");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
-
-                    String id = expensesRef.push().getKey();
-                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    Calendar cal = Calendar.getInstance();
-                    String date = dateFormat.format(cal.getTime());
-
-                    MutableDateTime epoch = new MutableDateTime();
-                    epoch.setDate(0);
-                    DateTime now = new DateTime();
-                    Weeks weeks = Weeks.weeksBetween(epoch, now);
-                    Months months = Months.monthsBetween(epoch, now);
-
-                    String itemNday = Item + date;
-                    String itemNweek = Item + weeks.getWeeks();
-                    String itemNmonth = Item + months.getMonths();
-
-
-                    Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(Amount), weeks.getWeeks(), months.getMonths(), notes);
-                    expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                            }
-
-                            loader.dismiss();
-                        }
-                    });
-
-                    todayItemsAdapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.GONE);
-
-                    int totalAmount = 0;
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        Object total = map.get("amount");
-                        int pTotal = Integer.parseInt(String.valueOf(total));
-                        totalAmount += pTotal;
-
-                        totalAmountSpentOn.setText("Total Day's Spending: $" + totalAmount);
-
+                        Products data = dataSnapshot.getValue(Products.class);
+                        myProductsList.add(data);
+                        product = data;
                     }
 
+                    if (!myProductsList.isEmpty()) {
+                        String Amount = String.valueOf(product.getAmount());
+                        String Item = product.getItem();
+                        String notes = product.getNotes();
+
+                        loader.setMessage("adding a budget item");
+                        loader.setCanceledOnTouchOutside(false);
+                        loader.show();
+
+                        String id = expensesRef.push().getKey();
+                        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        Calendar cal = Calendar.getInstance();
+                        String date = dateFormat.format(cal.getTime());
+
+                        MutableDateTime epoch = new MutableDateTime();
+                        epoch.setDate(0);
+                        DateTime now = new DateTime();
+                        Weeks weeks = Weeks.weeksBetween(epoch, now);
+                        Months months = Months.monthsBetween(epoch, now);
+
+                        String itemNday = Item + date;
+                        String itemNweek = Item + weeks.getWeeks();
+                        String itemNmonth = Item + months.getMonths();
+
+
+                        Data data = new Data(Item, date, id, itemNday, itemNweek, itemNmonth, Integer.parseInt(Amount), weeks.getWeeks(), months.getMonths(), notes);
+                        expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                loader.dismiss();
+                            }
+                        });
+
+                        todayItemsAdapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
+
+                        int totalAmount = 0;
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                            Object total = map.get("amount");
+                            int pTotal = Integer.parseInt(String.valueOf(total));
+                            totalAmount += pTotal;
+
+                            totalAmountSpentOn.setText("Total Day's Spending: $" + totalAmount);
+
+                        }
+
+                    } else {
+                        showToast();
+                    }
+
+
                 }
 
-                else{
-                    showToast();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
-
-
-
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+            });
+        }
+        catch (Exception ex)
+        {
+            showToast();
+        }
     }
 
     private void readItems() {
