@@ -862,11 +862,15 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                     }
 
                     float housePercent = (houseTotal/houseRatio)*100;
+                    System.out.println("ELOOO");
+                    System.out.println(houseTotal);
+                    System.out.println(houseRatio);
                     if (housePercent<50){
                         status_Image_house.setImageResource(R.drawable.green);
                     }else if (housePercent >= 50 && housePercent <100){
                         status_Image_house.setImageResource(R.drawable.brown);
                     }else {
+                        progress_ratio_house.setText(housePercent+" %" +" used of "+houseRatio + ". Status:");
                         status_Image_house.setImageResource(R.drawable.red);
 
                     }

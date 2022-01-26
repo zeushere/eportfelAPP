@@ -187,6 +187,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                 }
                 else {
                     linearLayoutTransport.setVisibility(View.GONE);
+                    personalRef.child("dayTrans").setValue(0);
                 }
 
             }
@@ -224,6 +225,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayFood").setValue(totalAmount);
                 }else {
                     linearLayoutFood.setVisibility(View.GONE);
+                    personalRef.child("dayFood").setValue(0);
                 }
 
             }
@@ -260,6 +262,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayHouse").setValue(totalAmount);
                 }else {
                     linearLayoutFoodHouse.setVisibility(View.GONE);
+                    personalRef.child("dayHouse").setValue(0);
                 }
 
             }
@@ -296,6 +299,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayEnt").setValue(totalAmount);
                 }else {
                     linearLayoutEntertainment.setVisibility(View.GONE);
+                    personalRef.child("dayEnt").setValue(0);
                 }
 
             }
@@ -330,8 +334,10 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         analyticsEducationAmount.setText("Spent PLN: " + totalAmount);
                     }
                     personalRef.child("dayEdu").setValue(totalAmount);
+
                 }else {
                     linearLayoutEducation.setVisibility(View.GONE);
+                    personalRef.child("dayEdu").setValue(0);
                 }
 
             }
@@ -368,6 +374,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayCha").setValue(totalAmount);
                 }else {
                     linearLayoutCharity.setVisibility(View.GONE);
+                    personalRef.child("dayCha").setValue(0);
                 }
 
             }
@@ -404,6 +411,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayApp").setValue(totalAmount);
                 }else {
                     linearLayoutApparel.setVisibility(View.GONE);
+                    personalRef.child("dayApp").setValue(0);
                 }
 
             }
@@ -440,6 +448,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayHea").setValue(totalAmount);
                 }else {
                     linearLayoutHealth.setVisibility(View.GONE);
+                    personalRef.child("dayHea").setValue(0);
                 }
 
             }
@@ -476,6 +485,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayPer").setValue(totalAmount);
                 }else {
                     linearLayoutPersonalExp.setVisibility(View.GONE);
+                    personalRef.child("dayPer").setValue(0);
                 }
 
             }
@@ -512,6 +522,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     personalRef.child("dayOther").setValue(totalAmount);
                 }else {
                     linearLayoutOther.setVisibility(View.GONE);
+                    personalRef.child("dayOther").setValue(0);
                 }
 
             }
@@ -573,6 +584,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     int foodTotal;
                     if (snapshot.hasChild("dayFood")){
                         foodTotal = Integer.parseInt(snapshot.child("dayFood").getValue().toString());
+                        System.out.println("JEDZENIE");
+                        System.out.println(foodTotal);
                     }else {
                         foodTotal = 0;
                     }
@@ -580,6 +593,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     int houseTotal;
                     if (snapshot.hasChild("dayHouse")){
                         houseTotal = Integer.parseInt(snapshot.child("dayHouse").getValue().toString());
+                        System.out.println("DOM");
+                        System.out.println(houseTotal);
                     }else {
                         houseTotal = 0;
                     }

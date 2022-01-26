@@ -494,7 +494,7 @@ public class BudgetActivity extends AppCompatActivity {
         });
     }
     private void getMonthHouseBudgetRatios(){
-        Query query = budgetRef.orderByChild("item").equalTo("House Expenses");
+        Query query = budgetRef.orderByChild("item").equalTo("House");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

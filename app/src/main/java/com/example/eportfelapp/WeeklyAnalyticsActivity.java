@@ -691,6 +691,7 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
                     float houseTotal;
                     if (snapshot.hasChild("weekHouse")){
                         houseTotal = Integer.parseInt(snapshot.child("weekHouse").getValue().toString());
+
                     }else {
                         houseTotal = 0;
                     }
