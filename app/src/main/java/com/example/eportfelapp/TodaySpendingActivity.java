@@ -55,6 +55,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     private TextView totalAmountSpentOn;
     private ProgressBar progressBar;
     private ProgressDialog loader;
+    private volatile boolean cancelled;
     private Button scanBtn;
 
     private FirebaseAuth mAuth;
@@ -72,6 +73,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     int needToUpdateProductInfo = 0;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
         fab = findViewById(R.id.fab);
         loader = new ProgressDialog(this);
+
 
         mAuth = FirebaseAuth.getInstance();
         onlineUserId = mAuth.getCurrentUser().getUid();
@@ -115,8 +118,25 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                 addItemSpentOn();
             }
         });
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+
+                            hello();
+
+                    }
 
 
+                },
+                10000,10000
+        );
+
+
+    }
+
+    private void hello(){
+        System.out.println("sey hello");
     }
 
     private void showToast() {
@@ -253,6 +273,31 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+    private void updateAmountRealtime(){
+        System.out.println("harszla");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
+        Query query = reference.orderByChild("id");
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Products product = new Products();
+                myProductsList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    Products data = dataSnapshot.getValue(Products.class);
+                    myProductsList.add(data);
+                    product = data;
+                    lastProductId = product.getId() + 1;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void addItemSpentOn() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
@@ -313,13 +358,20 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Products product = new Products();
-                            myProductsList.clear();
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                                 Products data = dataSnapshot.getValue(Products.class);
-                                myProductsList.add(data);
-                                product = data;
-                                lastProductId = product.getId() + 1;
+                                product = new Products(data.getItem(), Integer.parseInt(Amount)+1, data.getId(), data.getNotes(), data.getBarcode());
+                                productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            System.out.println("hacziko");
+                                        } else {
+                                            System.out.println("kamilzyla7");
+                                        }
+                                    }
+                                });
                             }
                         }
 
