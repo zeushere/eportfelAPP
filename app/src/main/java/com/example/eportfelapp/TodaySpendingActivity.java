@@ -67,6 +67,10 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     private List<Products> myProductsList;
     private String resultScan;
 
+    static int isPassed = 0;
+    int lastProductId = 0;
+    int needToUpdateProductInfo = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +117,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
 
     }
+
     private void showToast() {
         Toast.makeText(this, "No product in the database", Toast.LENGTH_SHORT).show();
     }
@@ -165,6 +170,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+                                    isPassed = 1;
                                     Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
@@ -200,9 +206,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
                 }
             });
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             showToast();
         }
     }
@@ -257,10 +261,13 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         final Spinner itemSpinner = myView.findViewById(R.id.itemspinner);
         final EditText amount = myView.findViewById(R.id.amount);
         final EditText note = myView.findViewById(R.id.note);
+        final EditText barcodeInput = myView.findViewById(R.id.barcode);
+
         final Button cancel = myView.findViewById(R.id.cancel);
         final Button save = myView.findViewById(R.id.save);
 
         note.setVisibility(View.VISIBLE);
+        barcodeInput.setVisibility(View.VISIBLE);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,25 +276,79 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                 String Amount = amount.getText().toString();
                 String Item = itemSpinner.getSelectedItem().toString();
                 String notes = note.getText().toString();
+                String barcode = barcodeInput.getText().toString();
 
                 if (TextUtils.isEmpty(Amount)) {
-                    amount.setError("Amount is required!");
+                    amount.setError("Item is required!");
                     return;
                 }
 
                 if (Item.equals("Select item")) {
                     Toast.makeText(TodaySpendingActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 if (TextUtils.isEmpty(notes)) {
                     note.setError("Note is required");
                     return;
+
                 } else {
-                    loader.setMessage("adding a budget item");
+                    loader.setMessage("Adding a budget item");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
 
+
                     String id = expensesRef.push().getKey();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
+                    Query query = reference.orderByChild("id");
+                    Query queryBarcode = reference.orderByChild("barcode").equalTo(Long.parseLong(barcode));
+                    query.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Products product = new Products();
+                            myProductsList.clear();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                                Products data = dataSnapshot.getValue(Products.class);
+                                myProductsList.add(data);
+                                product = data;
+                                lastProductId = product.getId() + 1;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    queryBarcode.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Products product = new Products();
+                            myProductsList.clear();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                                Products data = dataSnapshot.getValue(Products.class);
+                                myProductsList.add(data);
+                                product = data;
+                                if(product.getBarcode().equals(Long.parseLong(barcode))){
+                                    Toast.makeText(TodaySpendingActivity.this, "The product exists in the database", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                else{
+                                    needToUpdateProductInfo = 1;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                     Calendar cal = Calendar.getInstance();
                     String date = dateFormat.format(cal.getTime());
@@ -308,9 +369,30 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
+                                isPassed = 1;
                                 Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            if (isPassed == 1 && needToUpdateProductInfo == 1) {
+                                isPassed = 0;
+                                needToUpdateProductInfo = 0;
+                                try {
+                                    Products product = new Products(Item, Integer.parseInt(Amount), lastProductId, notes, Long.parseLong(barcode));
+                                    productsRef.child(String.valueOf(lastProductId)).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                } catch (Exception ex) {
+                                    Toast.makeText(TodaySpendingActivity.this, "Barcode is not a number", Toast.LENGTH_SHORT).show();
+                                }
                             }
 
                             loader.dismiss();

@@ -18,8 +18,16 @@ public class Products {
         this.notes = notes;
         this.barcode = barcode;
     }
+    public Products(String item, int amount, int id, String notes, long barcode) {
+        this.item = item;
+        this.amount = amount;
+        this.id = id;
+        this.notes = notes;
+        this.barcode = barcode;
+    }
     public Products() {
     }
+
 
     public String getItem() {
         return item;
