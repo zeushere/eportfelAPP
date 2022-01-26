@@ -919,17 +919,19 @@ public class WeeklyAnalyticsActivity extends AppCompatActivity {
                     }
 
                     float chaPercent = (chaTotal/chaRatio)*100;
-                    if (chaPercent<50){
-                        progress_ratio_cha.setText(Math.round(chaPercent)+" %" +" used of "+chaRatio + ". Status:");
-                        status_Image_cha.setImageResource(R.drawable.green);
-                    }else if (chaPercent >= 50 && chaPercent <100){
-                        progress_ratio_cha.setText(Math.round(chaPercent)+" %" +" used of "+chaRatio + ". Status:");
-                        status_Image_cha.setImageResource(R.drawable.brown);
-                    }else {
-                        progress_ratio_cha.setText(Math.round(chaPercent)+" %" +" used of "+chaRatio + ". Status:");
-                        status_Image_cha.setImageResource(R.drawable.red);
 
-                    }
+                        if (chaPercent < 50) {
+                            progress_ratio_cha.setText(Math.round(chaPercent) + " %" + " used of " + chaRatio + ". Status:");
+                            status_Image_cha.setImageResource(R.drawable.green);
+                        } else if (chaPercent >= 50 && chaPercent < 100) {
+                            progress_ratio_cha.setText(Math.round(chaPercent) + " %" + " used of " + chaRatio + ". Status:");
+                            status_Image_cha.setImageResource(R.drawable.brown);
+                        } else {
+                            progress_ratio_cha.setText(Math.round(chaPercent) + " %" + " used of " + chaRatio + ". Status:");
+                            status_Image_cha.setImageResource(R.drawable.red);
+
+                        }
+
 
                     float appPercent = (appTotal/appRatio)*100;
                     if (appPercent<50){

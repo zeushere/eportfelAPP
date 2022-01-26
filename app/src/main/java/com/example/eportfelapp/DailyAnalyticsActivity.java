@@ -923,6 +923,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                     }
 
                     float chaPercent = (chaTotal/chaRatio)*100;
+
                     if (chaPercent<50){
                         progress_ratio_cha.setText(Math.round(chaPercent)+" %" +" used of "+chaRatio + ". Status:");
                         status_Image_cha.setImageResource(R.drawable.green);
@@ -934,6 +935,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         status_Image_cha.setImageResource(R.drawable.red);
 
                     }
+
 
                     float appPercent = (appTotal/appRatio)*100;
                     if (appPercent<50){
