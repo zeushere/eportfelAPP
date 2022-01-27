@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String onlineUserID = "";
 
     private int totalAmountMonth = 0;
-    private int totalAmountBudget = 0;
+
     private int totalAmountBudgetB = 0;
     private int totalAmountBudgetC = 0;
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         budgetRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                int totalAmountBudget = 0;
                 if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Map<String, Object> map = (Map<String, Object>) ds.getValue();
@@ -183,10 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     totalAmountBudget = 0;
                     budgetTv.setText("PLN " + String.valueOf(0));
 
-
                 }
-
-
             }
 
             @Override
