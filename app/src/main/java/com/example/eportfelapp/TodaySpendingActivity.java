@@ -129,7 +129,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         updateAmountRealtime();
                     }
                 },
-                7000, 7000
+                45000, 60000
         );
 
 
@@ -138,8 +138,8 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     private int updateAmount(int id) {
         Random random = new Random();
 
-        int first = arrayForUpdatingProductsWithFirstAmount.get(id - 1).getAmount() - 3;
-        int second = arrayForUpdatingProductsWithFirstAmount.get(id - 1).getAmount() + 3;
+        int first = arrayForUpdatingProductsWithFirstAmount.get(id - 1).getAmount() - 1;
+        int second = arrayForUpdatingProductsWithFirstAmount.get(id - 1).getAmount() + 1;
         if (first <= 0) {
             first = 1;
         }
