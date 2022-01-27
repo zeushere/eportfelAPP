@@ -439,9 +439,9 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                     if (product.getBarcode().equals(Long.parseLong(barcode))) {
                                         needToUpdateProductInfo = 1;
                                         product = new Products(Item, Integer.parseInt(Amount), product.getId(), notes, Long.parseLong(barcode));
-                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId()-1).setItem(Item);
-                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId()-1).setNotes(notes);
-                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId()-1).setAmount(Integer.parseInt(Amount));
+                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId() - 1).setItem(Item);
+                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId() - 1).setNotes(notes);
+                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId() - 1).setAmount(Integer.parseInt(Amount));
                                         getFirstInformationOfProducts();
                                         productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
