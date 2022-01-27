@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">eportfelAPP</string>
+    <string name="app_name">E-portfel</string>
 
     <string-array name="items">
         <item>Select item</item>
