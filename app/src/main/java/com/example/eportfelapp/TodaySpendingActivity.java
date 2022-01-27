@@ -63,6 +63,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     private String onlineUserId = "";
     private DatabaseReference expensesRef;
     private DatabaseReference productsRef;
+    private DatabaseReference productsCopyRef;
 
     private TodayItemsAdapter todayItemsAdapter;
     private List<Data> myDataList;
@@ -72,12 +73,13 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     int isPassed = 0;
     int lastProductId = 0;
     int needToUpdateProductInfo = 0;
-
+    public ArrayList<Products> arrayForUpdatingProductsWithFirstAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_spending);
+        arrayForUpdatingProductsWithFirstAmount = new ArrayList<>();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,6 +97,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         onlineUserId = mAuth.getCurrentUser().getUid();
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         productsRef = FirebaseDatabase.getInstance().getReference("products");
+        productsCopyRef = FirebaseDatabase.getInstance().getReference("productsCopy");
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -110,6 +113,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         recyclerView.setAdapter(todayItemsAdapter);
 
         readItems();
+        getFirstInformationOfProducts();
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -122,23 +126,20 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-
                         updateAmountRealtime();
-
                     }
-
-
                 },
-                10000, 60000
+                7000, 7000
         );
 
 
     }
 
-    private int updateAmount(int amount) {
+    private int updateAmount(int id) {
         Random random = new Random();
-        int first = amount - 3;
-        int second = amount + 3;
+
+        int first = arrayForUpdatingProductsWithFirstAmount.get(id - 1).getAmount() - 3;
+        int second = arrayForUpdatingProductsWithFirstAmount.get(id - 1).getAmount() + 3;
         if (first <= 0) {
             first = 1;
         }
@@ -148,7 +149,34 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         return result;
     }
 
+    private void getFirstInformationOfProducts() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("productsCopy");
+        Query query = reference.orderByChild("id");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Products product = new Products();
+                int i = 0;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    Products data = dataSnapshot.getValue(Products.class);
+                    arrayForUpdatingProductsWithFirstAmount.add(data);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
     private void updateAmountRealtime() {
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
         Query query = reference.orderByChild("id");
 
@@ -161,7 +189,8 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
                     Products data = dataSnapshot.getValue(Products.class);
 
-                    product = new Products(data.getItem(), updateAmount(data.getAmount()), data.getId(), data.getNotes(), data.getBarcode());
+
+                    product = new Products(data.getItem(), updateAmount(data.getId()), data.getId(), data.getNotes(), data.getBarcode());
                     productsRef.child(String.valueOf(data.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -180,6 +209,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
             }
         });
+
     }
 
 
@@ -306,7 +336,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     totalAmountSpentOn.setText("Total Day's Spending: PLN " + totalAmount);
                 }
                 if (totalAmount == 0) {
-                    totalAmountSpentOn.setText("Total Day's Spending: PLN " + totalAmount);
+                    totalAmountSpentOn.setText("Total Spending: PLN " + totalAmount);
                 }
             }
 
@@ -409,6 +439,10 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                     if (product.getBarcode().equals(Long.parseLong(barcode))) {
                                         needToUpdateProductInfo = 1;
                                         product = new Products(Item, Integer.parseInt(Amount), product.getId(), notes, Long.parseLong(barcode));
+                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId()-1).setItem(Item);
+                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId()-1).setNotes(notes);
+                                        arrayForUpdatingProductsWithFirstAmount.get(product.getId()-1).setAmount(Integer.parseInt(Amount));
+                                        getFirstInformationOfProducts();
                                         productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -420,6 +454,16 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                                 }
                                             }
                                         });
+                                        productsCopyRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+
+                                                } else {
+                                                }
+                                            }
+                                        });
+
                                     }
 
                                     break;
@@ -468,6 +512,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                 isPassed = 0;
                                 try {
                                     Products product = new Products(Item, Integer.parseInt(Amount), lastProductId, notes, Long.parseLong(barcode));
+                                    arrayForUpdatingProductsWithFirstAmount.add(product);
                                     productsRef.child(String.valueOf(lastProductId)).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -475,6 +520,14 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                                 Toast.makeText(TodaySpendingActivity.this, "Product added successfuly", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    productsCopyRef.child(String.valueOf(lastProductId)).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                            } else {
                                             }
                                         }
                                     });
