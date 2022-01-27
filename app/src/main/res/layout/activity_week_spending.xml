@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="total week amount: PLN 0"
+        android:text="Total Spending: PLN 0"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="25sp"
