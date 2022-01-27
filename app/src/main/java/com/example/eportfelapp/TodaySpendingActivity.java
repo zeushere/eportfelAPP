@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class TodaySpendingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -123,18 +124,64 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void run() {
 
-                            hello();
+                          updateAmountRealtime();
 
                     }
 
 
                 },
-                10000,10000
+                1000,10000
         );
 
 
     }
+    private int updateAmount(int amount){
+        Random random = new Random();
+        int first = amount-3;
+        int second = amount+3;
+        if(first<=0) {
+            first=1;
+        }
+        int result = random.nextInt(second-first+1)+first;
+        
 
+        return result;
+    }
+    private void updateAmountRealtime(){
+        System.out.println("harszla");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
+        Query query = reference.orderByChild("id");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Products product = new Products();
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    Products data = dataSnapshot.getValue(Products.class);
+
+                    product = new Products(data.getItem(), updateAmount(data.getAmount()), data.getId(), data.getNotes(), data.getBarcode());
+                    productsRef.child(String.valueOf(data.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+
+                                System.out.println("ZYLA7"); }
+                            else {
+                                System.out.println("ZARZYK11");
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void hello(){
         System.out.println("sey hello");
     }
@@ -273,31 +320,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    private void updateAmountRealtime(){
-        System.out.println("harszla");
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
-        Query query = reference.orderByChild("id");
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Products product = new Products();
-                myProductsList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                    Products data = dataSnapshot.getValue(Products.class);
-                    myProductsList.add(data);
-                    product = data;
-                    lastProductId = product.getId() + 1;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void addItemSpentOn() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
@@ -358,20 +381,13 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Products product = new Products();
+                            myProductsList.clear();
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                                 Products data = dataSnapshot.getValue(Products.class);
-                                product = new Products(data.getItem(), Integer.parseInt(Amount)+1, data.getId(), data.getNotes(), data.getBarcode());
-                                productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            System.out.println("hacziko");
-                                        } else {
-                                            System.out.println("kamilzyla7");
-                                        }
-                                    }
-                                });
+                                myProductsList.add(data);
+                                product = data;
+                                lastProductId = product.getId() + 1;
                             }
                         }
 
@@ -393,26 +409,26 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
 
-                                        Products data = dataSnapshot.getValue(Products.class);
-                                        myProductsList.add(data);
-                                        product = data;
-                                        if(product.getBarcode().equals(Long.parseLong(barcode))){
-                                            needToUpdateProductInfo = 1;
-                                            product = new Products(Item, Integer.parseInt(Amount), product.getId(), notes, Long.parseLong(barcode));
-                                            productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
+                                    Products data = dataSnapshot.getValue(Products.class);
+                                    myProductsList.add(data);
+                                    product = data;
+                                    if(product.getBarcode().equals(Long.parseLong(barcode))){
+                                        needToUpdateProductInfo = 1;
+                                        product = new Products(Item, Integer.parseInt(Amount), product.getId(), notes, Long.parseLong(barcode));
+                                        productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
 
-                                                        Toast.makeText(TodaySpendingActivity.this, "Product updated successfuly", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                                    }
+                                                    Toast.makeText(TodaySpendingActivity.this, "Product updated successfuly", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(TodaySpendingActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                                 }
-                                            });
-                                        }
+                                            }
+                                        });
+                                    }
 
-                                        break;
+                                    break;
 
                                 }
                             }
@@ -422,7 +438,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
                             }
                         });
-               }
+                    }
 
 
                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
