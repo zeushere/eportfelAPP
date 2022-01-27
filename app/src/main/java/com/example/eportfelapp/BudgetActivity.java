@@ -122,6 +122,8 @@ public class BudgetActivity extends AppCompatActivity {
                         totalammount += data.getAmount();
 
                         String sttotal = String.valueOf("Month Budget: PLN " + totalammount);
+                        System.out.println("Mamy tutaj cene");
+                        System.out.println(sttotal);
 
                         totalBudgetAmountTextView.setText(sttotal);
 

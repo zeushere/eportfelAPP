@@ -129,7 +129,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
 
                 },
-                10000, 10000
+                10000, 60000
         );
 
 
@@ -182,9 +182,6 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    private void hello() {
-        System.out.println("sey hello");
-    }
 
     private void showToast() {
         Toast.makeText(this, "No product in the database", Toast.LENGTH_SHORT).show();
@@ -196,7 +193,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
             Query query = reference.orderByChild("barcode").equalTo(result);
 
-            query.addValueEventListener(new ValueEventListener() {
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Products product = new Products();
