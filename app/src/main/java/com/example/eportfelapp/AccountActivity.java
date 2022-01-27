@@ -39,9 +39,9 @@ public class AccountActivity extends AppCompatActivity {
                         .setTitle("Personal Budgeting App")
                         .setMessage("Are you sure you want to exit?")
                         .setCancelable(false)
-                        .setPositiveButton("Yes", (dialog,id)->{
+                        .setPositiveButton("Yes", (dialog, id) -> {
                             FirebaseAuth.getInstance().signOut();
-                            Intent intent = new Intent(AccountActivity.this,LoginActivity.class);
+                            Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         })

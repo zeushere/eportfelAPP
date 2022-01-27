@@ -2,8 +2,8 @@ package com.example.eportfelapp;
 
 public class Data {
 
-    String item,date,id, itemNday, itemNweek, itemNmonth;
-    int amount,week,month;
+    String item, date, id, itemNday, itemNweek, itemNmonth;
+    int amount, week, month;
     String notes;
 
     public Data() {

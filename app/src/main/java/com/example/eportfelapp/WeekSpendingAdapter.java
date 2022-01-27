@@ -25,22 +25,22 @@ public class WeekSpendingAdapter extends RecyclerView.Adapter<WeekSpendingAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.retrieve_layout, parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.retrieve_layout, parent, false);
         return new WeekSpendingAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final  Data data = myDataList.get(position);
+        final Data data = myDataList.get(position);
 
-        holder.item.setText("Item: "+ data.getItem());
-        holder.amount.setText("Amount: PLN "+ data.getAmount());
-        holder.date.setText("On "+data.getDate());
-        holder.notes.setText("Note: "+data.getNotes());
+        holder.item.setText("Item: " + data.getItem());
+        holder.amount.setText("Amount: PLN " + data.getAmount());
+        holder.date.setText("On " + data.getDate());
+        holder.notes.setText("Note: " + data.getNotes());
 
 
-        switch (data.getItem()){
+        switch (data.getItem()) {
             case "Transport":
                 holder.imageView.setImageResource(R.drawable.ic_transport);
                 break;
@@ -80,7 +80,7 @@ public class WeekSpendingAdapter extends RecyclerView.Adapter<WeekSpendingAdapte
         return myDataList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView item, amount, date, notes;
         public ImageView imageView;

@@ -74,7 +74,6 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
     int needToUpdateProductInfo = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,31 +123,32 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void run() {
 
-                          updateAmountRealtime();
+                        updateAmountRealtime();
 
                     }
 
 
                 },
-                1000,10000
+                10000, 10000
         );
 
 
     }
-    private int updateAmount(int amount){
+
+    private int updateAmount(int amount) {
         Random random = new Random();
-        int first = amount-3;
-        int second = amount+3;
-        if(first<=0) {
-            first=1;
+        int first = amount - 3;
+        int second = amount + 3;
+        if (first <= 0) {
+            first = 1;
         }
-        int result = random.nextInt(second-first+1)+first;
-        
+        int result = random.nextInt(second - first + 1) + first;
+
 
         return result;
     }
-    private void updateAmountRealtime(){
-        System.out.println("harszla");
+
+    private void updateAmountRealtime() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
         Query query = reference.orderByChild("id");
 
@@ -167,9 +167,8 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
 
-                                System.out.println("ZYLA7"); }
-                            else {
-                                System.out.println("ZARZYK11");
+                            } else {
+
                             }
                         }
                     });
@@ -182,7 +181,8 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
             }
         });
     }
-    private void hello(){
+
+    private void hello() {
         System.out.println("sey hello");
     }
 
@@ -308,7 +308,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
 
                     totalAmountSpentOn.setText("Total Day's Spending: PLN " + totalAmount);
                 }
-                if (totalAmount == 0){
+                if (totalAmount == 0) {
                     totalAmountSpentOn.setText("Total Day's Spending: PLN " + totalAmount);
                 }
             }
@@ -319,7 +319,6 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
             }
         });
     }
-
 
 
     private void addItemSpentOn() {
@@ -375,7 +374,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
                     Query query = reference.orderByChild("id");
                     Query queryBarcode = null;
-                    if(!TextUtils.isEmpty(barcode))
+                    if (!TextUtils.isEmpty(barcode))
                         queryBarcode = reference.orderByChild("barcode").equalTo(Long.parseLong(barcode));
                     query.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -398,9 +397,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     });
 
 
-
-
-                    if(!TextUtils.isEmpty(barcode)){
+                    if (!TextUtils.isEmpty(barcode)) {
                         queryBarcode.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -412,7 +409,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                                     Products data = dataSnapshot.getValue(Products.class);
                                     myProductsList.add(data);
                                     product = data;
-                                    if(product.getBarcode().equals(Long.parseLong(barcode))){
+                                    if (product.getBarcode().equals(Long.parseLong(barcode))) {
                                         needToUpdateProductInfo = 1;
                                         product = new Products(Item, Integer.parseInt(Amount), product.getId(), notes, Long.parseLong(barcode));
                                         productsRef.child(String.valueOf(product.getId())).setValue(product).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -460,7 +457,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                     expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(isPassed == 0){
+                            if (isPassed == 0) {
                                 if (task.isSuccessful()) {
                                     isPassed = 1;
                                     Toast.makeText(TodaySpendingActivity.this, "Budget item added successfuly", Toast.LENGTH_SHORT).show();

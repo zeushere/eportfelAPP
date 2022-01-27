@@ -46,7 +46,6 @@ public class WeekSpendingActivity extends AppCompatActivity {
     private String type = "";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +73,15 @@ public class WeekSpendingActivity extends AppCompatActivity {
         recyclerView.setAdapter(weekSpendingAdapter);
 
 
-        if(getIntent().getExtras()!=null){
+        if (getIntent().getExtras() != null) {
             type = getIntent().getStringExtra("type");
-            if(type.equals("week")){
+            if (type.equals("week")) {
                 readWeekSpendingItems();
-            } else if (type.equals("month")){
+            } else if (type.equals("month")) {
                 readMonthSpendingItems();
                 getSupportActionBar().setTitle("Month Spending");
             }
         }
-        
 
 
     }
@@ -101,7 +99,7 @@ public class WeekSpendingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myDataList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Data data = dataSnapshot.getValue(Data.class);
                     myDataList.add(data);
                 }
@@ -110,13 +108,13 @@ public class WeekSpendingActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 int totalAmount = 0;
-                for (DataSnapshot ds: snapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
                     totalAmount += pTotal;
 
-                    totalWeekAmountTextView.setText("Total Month's Spending: PLN "+totalAmount);
+                    totalWeekAmountTextView.setText("Total Month's Spending: PLN " + totalAmount);
 
 
                 }
@@ -145,7 +143,7 @@ public class WeekSpendingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myDataList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Data data = dataSnapshot.getValue(Data.class);
                     myDataList.add(data);
                 }
@@ -154,13 +152,13 @@ public class WeekSpendingActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
 
                 int totalAmount = 0;
-                for (DataSnapshot ds: snapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
                     totalAmount += pTotal;
 
-                    totalWeekAmountTextView.setText("Total Week's Spending: PLN "+totalAmount);
+                    totalWeekAmountTextView.setText("Total Week's Spending: PLN " + totalAmount);
 
                 }
 

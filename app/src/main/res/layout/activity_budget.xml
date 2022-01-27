@@ -8,45 +8,46 @@
     tools:context=".BudgetActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000"
-        android:id="@+id/toolbar"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/totalBudgetAmountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="total Budget amount: PLN 0"
-        android:textSize="25sp"
-        android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="#000"
-        android:layout_marginTop="5dp"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/money_bg"
-            android:id="@+id/recyclerView"/>
+            android:background="@drawable/money_bg" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            app:fabSize="normal"
-            android:id="@+id/fab"
+            android:layout_margin="16dp"
             android:backgroundTint="#4ABF1B"
             android:src="@drawable/ic_add"
-            android:layout_margin="16dp"/>
+            app:fabSize="normal" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

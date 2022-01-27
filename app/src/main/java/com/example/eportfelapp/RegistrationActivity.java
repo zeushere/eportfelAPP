@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private EditText email,password;
+    private EditText email, password;
     private Button registerBtn;
     private TextView registerQn;
 
@@ -44,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
         registerQn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -55,27 +55,26 @@ public class RegistrationActivity extends AppCompatActivity {
                 String emailString = email.getText().toString();
                 String passwordString = password.getText().toString();
 
-                if (TextUtils.isEmpty(emailString)){
+                if (TextUtils.isEmpty(emailString)) {
                     email.setError("Email is required");
                 }
-                if (TextUtils.isEmpty(passwordString)){
+                if (TextUtils.isEmpty(passwordString)) {
                     password.setError("Password is required");
-                }
-                else {
+                } else {
                     progressDialog.setMessage("registration in progress");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
 
                     mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener((task) -> {
-                            if (task.isSuccessful()){
-                                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                                progressDialog.dismiss();
-                            } else {
-                                Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            }
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                            progressDialog.dismiss();
+                        } else {
+                            Toast.makeText(RegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
                     });
                 }
             }

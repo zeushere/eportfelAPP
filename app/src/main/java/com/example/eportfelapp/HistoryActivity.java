@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class HistoryActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class HistoryActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private RecyclerView recyclerView;
 
@@ -94,8 +94,8 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        int months = month+1;
-        String date = dayOfMonth+"-"+"0"+months +"-"+year;
+        int months = month + 1;
+        String date = dayOfMonth + "-" + "0" + months + "-" + year;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserId);
         Query query = reference.orderByChild("date").equalTo(date);
@@ -103,7 +103,7 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 myDataList.clear();
-                for (DataSnapshot snapshot :dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Data data = snapshot.getValue(Data.class);
                     myDataList.add(data);
                 }
@@ -111,14 +111,14 @@ public class HistoryActivity extends AppCompatActivity implements DatePickerDial
                 recyclerView.setVisibility(View.VISIBLE);
 
                 int totalAmount = 0;
-                for (DataSnapshot ds :  dataSnapshot.getChildren()){
-                    Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Map<String, Object> map = (Map<String, Object>) ds.getValue();
                     Object total = map.get("amount");
                     int pTotal = Integer.parseInt(String.valueOf(total));
-                    totalAmount+=pTotal;
-                    if (totalAmount >0){
+                    totalAmount += pTotal;
+                    if (totalAmount > 0) {
                         historyTotalAmountSpent.setVisibility(View.VISIBLE);
-                        historyTotalAmountSpent.setText("This day you spent PLN: "+ totalAmount);
+                        historyTotalAmountSpent.setText("This day you spent PLN: " + totalAmount);
                     }
 
                 }

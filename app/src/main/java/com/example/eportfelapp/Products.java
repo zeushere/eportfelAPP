@@ -3,7 +3,7 @@ package com.example.eportfelapp;
 public class Products {
 
     String item, date, itemNday, itemNweek, itemNmonth;
-    int amount,id;
+    int amount, id;
     String notes;
     long barcode;
 
@@ -18,6 +18,7 @@ public class Products {
         this.notes = notes;
         this.barcode = barcode;
     }
+
     public Products(String item, int amount, int id, String notes, long barcode) {
         this.item = item;
         this.amount = amount;
@@ -25,6 +26,7 @@ public class Products {
         this.notes = notes;
         this.barcode = barcode;
     }
+
     public Products() {
     }
 

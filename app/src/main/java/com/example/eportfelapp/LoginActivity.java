@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email,password;
+    private EditText email, password;
     private Button loginBtn;
     private TextView loginQn;
 
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = mAuth.getCurrentUser();
-                if(user!=null){
+                if (user != null) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -61,40 +61,38 @@ public class LoginActivity extends AppCompatActivity {
         loginQn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,RegistrationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
         });
 
-        loginBtn.setOnClickListener(new View.OnClickListener(){
+        loginBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 String emailString = email.getText().toString();
                 String passwordString = password.getText().toString();
 
-                if (TextUtils.isEmpty(emailString)){
+                if (TextUtils.isEmpty(emailString)) {
                     email.setError("Email is required");
                 }
-                if (TextUtils.isEmpty(passwordString)){
+                if (TextUtils.isEmpty(passwordString)) {
                     password.setError("Password is required");
-                }
-
-                else {
+                } else {
                     progressDialog.setMessage("login in progress");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
 
                     mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener((task) -> {
-                            if (task.isSuccessful()){
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                                progressDialog.dismiss();
-                            } else {
-                                Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            }
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                            progressDialog.dismiss();
+                        } else {
+                            Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
                     });
                 }
             }
