@@ -378,7 +378,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                 String barcode = barcodeInput.getText().toString();
 
                 if (TextUtils.isEmpty(Amount)) {
-                    amount.setError("Item is required!");
+                    amount.setError("Amount is required!");
                     return;
                 }
 
@@ -388,7 +388,7 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                 }
 
                 if (TextUtils.isEmpty(notes)) {
-                    note.setError("Note is required");
+                    note.setError("Note is required!");
                     return;
 
                 } else {
