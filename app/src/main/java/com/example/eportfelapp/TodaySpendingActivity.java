@@ -377,8 +377,14 @@ public class TodaySpendingActivity extends AppCompatActivity implements View.OnC
                 String notes = note.getText().toString();
                 String barcode = barcodeInput.getText().toString();
 
-                if (TextUtils.isEmpty(Amount)) {
+                if (TextUtils.isEmpty(Amount)){
                     amount.setError("Amount is required!");
+                    return;
+                }
+
+                int amountInt = Integer.parseInt(Amount);
+                if(amountInt == 0){
+                    amount.setError("Amount cannot be zero!");
                     return;
                 }
 

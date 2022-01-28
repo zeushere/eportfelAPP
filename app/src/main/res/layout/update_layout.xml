@@ -26,7 +26,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="enter amount..."
+        android:hint="Enter amount..."
         android:textColorHint="#000"
         android:inputType="number"
         android:id="@+id/amount"
@@ -35,7 +35,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="enter note..."
+        android:hint="Enter note..."
         android:textColorHint="#000"
         android:id="@+id/note"
         android:inputType="textCapSentences"

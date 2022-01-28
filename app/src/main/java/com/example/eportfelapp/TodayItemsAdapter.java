@@ -1,6 +1,7 @@
 package com.example.eportfelapp;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,7 +138,21 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (TextUtils.isEmpty(mNotes.getText().toString())){
+                    mNotes.setError("Note is required!");
+                    return;
+                }
 
+                if (TextUtils.isEmpty(mAmount.getText().toString())){
+                    mAmount.setError("Amount is required!");
+                    return;
+                }
+
+                int amountInt = Integer.parseInt(mAmount.getText().toString());
+                if(amountInt == 0){
+                    mAmount.setError("Amount cannot be zero!");
+                    return;
+                }
                 amount = Integer.parseInt(mAmount.getText().toString());
                 note = mNotes.getText().toString();
 

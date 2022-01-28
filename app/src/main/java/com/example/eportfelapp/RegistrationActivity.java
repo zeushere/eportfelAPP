@@ -61,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(passwordString)) {
                     password.setError("Password is required");
                 } else {
-                    progressDialog.setMessage("registration in progress");
+                    progressDialog.setMessage("Registration in progress");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
 
