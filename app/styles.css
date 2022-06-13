@@ -1,0 +1,94 @@
+.root {
+    -fx-background-color: white;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+splitPane {
+    -fx-box-border: transparent;
+}
+
+.button:hover {
+    -fx-background-color: #7d7d80;
+    -fx-font-weight: bold;
+}
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 0 0 0;
+}
+
+#btnForgot {
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 1);
+}
+
+.button {
+    -fx-background-color:  #94a6b2;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 1);
+    -fx-font-size: 12;
+}
+
+#btnForgot:hover {
+    -fx-text-fill: lightblue;
+    -fx-background-color: white;
+}
+
+#MainGrid {
+    -fx-background-color: linear-gradient(to right top, #FFFFFFFF, #698abf);
+}
+
+#MainGrid Label {
+    -fx-font-weight: bold;
+}
+
+Separator {
+    -fx-border-color: #6c29fc
+}
+
+#or {
+    -fx-font-weight: bold;
+}
+
+TextField {
+    -fx-border-color: grey;
+    -fx-border-width: 1px;
+    -fx-alignment: center;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 1);
+
+}
+
+PasswordField {
+    -fx-alignment: center;
+    -fx-background-color: white;
+    -fx-border-color: grey;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 1);
+}
+
+PasswordField:hover {
+
+}
+
+#labelBackground{
+    -fx-background-color: rgba(241, 241, 241, 0.77);
+}
+#leftNavbar{
+    -fx-background-color: linear-gradient(to bottom, #FFFFFFFF, #e3b291);
+}
+.table-cell {
+    -fx-alignment: CENTER;
+}
+
+.combo-box>.list-cell {
+    -fx-alignment: center;
+}
+.date-picker > .text-field {
+    -fx-alignment: center;
+}
